@@ -924,6 +924,12 @@ var Select = React.createClass({
 			);
 		}
 
+		var focusedLabel = classes({
+			'Select-label': true,
+			'focus': this.state.isFocused
+		});
+
+		//classes
 		return React.createElement(
 			'div',
 			{ ref: 'wrapper', className: selectClass },
@@ -931,7 +937,11 @@ var Select = React.createClass({
 			React.createElement(
 				'div',
 				{ className: 'Select-control', ref: 'control', onKeyDown: this.handleKeyDown, onMouseDown: this.handleMouseDown, onTouchEnd: this.handleMouseDown },
-				value,
+				React.createElement(
+					'label',
+					{ className: focusedLabel },
+					this.state.placeholder
+				),
 				input,
 				React.createElement('span', { className: 'Select-arrow-zone', onMouseDown: this.handleMouseDownOnArrow }),
 				React.createElement('span', { className: 'Select-arrow', onMouseDown: this.handleMouseDownOnArrow }),

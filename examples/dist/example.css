@@ -8,6 +8,23 @@
 .Select {
   position: relative;
 }
+.Select-label {
+  position: absolute;
+  pointer-events: none;
+  left: 1px;
+  top: 20px;
+  font-size: 21px;
+  transition: top 0.3s, color 0.3s, font 0.3s;
+}
+.Select-label.focus {
+  top: -5px;
+  font-size: 17px;
+  color: red;
+}
+.Select-label.keep {
+  top: -5px;
+  font-size: 17px;
+}
 .Select-control {
   position: relative;
   overflow: hidden;
