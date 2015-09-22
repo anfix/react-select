@@ -871,11 +871,18 @@ var Select = React.createClass({
 			value = this.props.placeholder
 		}
 		
+		var animatedBar = ClassNames({
+            "aui-core-form-default-input-bar-animation":true,
+            "focus": this.state.isFocused,
+            "aui-core-display-off": !this.props.material
+        });
+		
 		//classes
 		return (
 			<div ref="wrapper" className={selectClass}>
 				<input type="hidden" ref="value" name={this.props.name} value={this.state.value} disabled={this.props.disabled} />
 				<div className="Select-control" ref="control" onKeyDown={this.handleKeyDown} onMouseDown={this.handleMouseDown} onTouchEnd={this.handleMouseDown}>
+					<div className={animatedBar}></div>
 					<label className={focusedLabel}>{this.state.initialPlaceholder}</label>
 					{value}
 					{input}
