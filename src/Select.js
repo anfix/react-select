@@ -868,8 +868,7 @@ var Select = React.createClass({
 		value = val ? value : null;
 		
 		if (!val && !this.props.material){
-			
-			value = this.props.initialPlaceholder
+			value = this.props.placeholder
 		}
 		
 		//classes
@@ -877,7 +876,7 @@ var Select = React.createClass({
 			<div ref="wrapper" className={selectClass}>
 				<input type="hidden" ref="value" name={this.props.name} value={this.state.value} disabled={this.props.disabled} />
 				<div className="Select-control" ref="control" onKeyDown={this.handleKeyDown} onMouseDown={this.handleMouseDown} onTouchEnd={this.handleMouseDown}>
-					<label className={focusedLabel}>{this.state.initialPlaceholder}</label>
+					<label className={focusedLabel}>{this.state.placeholder}</label>
 					{value}
 					{input}
 					<span className="Select-arrow-zone" onMouseDown={this.handleMouseDownOnArrow} />
