@@ -859,13 +859,18 @@ var Select = React.createClass({
 		}
 		
 		var focusedLabel = classes({
-			'Select-label' : true,
-			'focus' : this.state.isFocused,
+			'Select-label': true,
+			'focus': this.state.isFocused,
 			'keep': !this.state.isFocused && val,
 			"aui-core-display-off": !this.props.material
 		});
-		
+
 		value = val ? value : null;
+		
+		if (!val && !this.props.material){
+			
+			value = this.props.initialPlaceholder
+		}
 		
 		//classes
 		return (
