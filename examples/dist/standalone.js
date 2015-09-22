@@ -120,7 +120,8 @@ var Select = React.createClass({
 		singleValueComponent: React.PropTypes.func, // single value component when multiple is set to false
 		value: React.PropTypes.any, // initial field value
 		valueComponent: React.PropTypes.func, // value component to render in multiple mode
-		valueRenderer: React.PropTypes.func // valueRenderer: function(option) {}
+		valueRenderer: React.PropTypes.func, // valueRenderer: function(option) {}
+		material: React.PropTypes.bool // material: if component will have animation && material behaviour. false
 	},
 
 	getDefaultProps: function getDefaultProps() {
@@ -129,18 +130,19 @@ var Select = React.createClass({
 			allowCreate: false,
 			asyncOptions: undefined,
 			autoload: true,
-			backspaceRemoves: true,
+			backspaceRemoves: false,
 			cacheAsyncResults: true,
 			className: undefined,
 			clearAllText: 'Clear all',
 			clearValueText: 'Clear value',
-			clearable: true,
+			clearable: false,
 			delimiter: ',',
 			disabled: false,
 			ignoreCase: true,
 			inputProps: {},
 			matchPos: 'any',
 			matchProp: 'any',
+			multi: false,
 			name: undefined,
 			newOptionCreator: undefined,
 			noResultsText: 'No results found',
@@ -155,7 +157,8 @@ var Select = React.createClass({
 			searchPromptText: 'Type to search',
 			singleValueComponent: SingleValue,
 			value: undefined,
-			valueComponent: Value
+			valueComponent: Value,
+			material: false
 		};
 	},
 
@@ -173,7 +176,8 @@ var Select = React.createClass({
 			isFocused: false,
 			isLoading: false,
 			isOpen: false,
-			options: this.props.options
+			options: this.props.options,
+			initialPlaceholder: this.props.placeholder
 		};
 	},
 
@@ -835,6 +839,8 @@ var Select = React.createClass({
 			'has-value': this.state.value
 		});
 		var value = [];
+
+		var valued = false;
 		if (this.props.multi) {
 			this.state.values.forEach(function (val) {
 				var onOptionLabelClick = this.handleOptionLabelClick.bind(this, val);
@@ -848,6 +854,10 @@ var Select = React.createClass({
 					onRemove: onRemove,
 					disabled: this.props.disabled
 				});
+
+				valued = true;
+
+				console.log("1");
 				value.push(valueComponent);
 			}, this);
 		}
@@ -855,6 +865,9 @@ var Select = React.createClass({
 		if (!this.state.inputValue && (!this.props.multi || !value.length)) {
 			var val = this.state.values[0] || null;
 			if (this.props.valueRenderer && !!this.state.values.length) {
+				valued = true;
+
+				console.log("2");
 				value.push(React.createElement(Value, {
 					key: 0,
 					option: val,
@@ -866,12 +879,17 @@ var Select = React.createClass({
 					value: val,
 					placeholder: this.state.placeholder
 				});
+
 				value.push(singleValueComponent);
 			}
+
+			console.log(val);
 		}
 
 		var loading = this.state.isLoading ? React.createElement('span', { className: 'Select-loading', 'aria-hidden': 'true' }) : null;
 		var clear = this.props.clearable && this.state.value && !this.props.disabled ? React.createElement('span', { className: 'Select-clear', title: this.props.multi ? this.props.clearAllText : this.props.clearValueText, 'aria-label': this.props.multi ? this.props.clearAllText : this.props.clearValueText, onMouseDown: this.clearValue, onTouchEnd: this.clearValue, onClick: this.clearValue, dangerouslySetInnerHTML: { __html: '&times;' } }) : null;
+
+		console.log(valued);
 
 		var menu;
 		var menuProps;
@@ -926,7 +944,21 @@ var Select = React.createClass({
 
 		var focusedLabel = classes({
 			'Select-label': true,
-			'focus': this.state.isFocused
+			'focus': this.state.isFocused,
+			'keep': !this.state.isFocused && val,
+			"aui-core-display-off": !this.props.material
+		});
+
+		value = val ? value : null;
+
+		if (!val && !this.props.material) {
+			value = this.props.placeholder;
+		}
+
+		var animatedBar = classes({
+			"aui-core-form-default-input-bar-animation": true,
+			"focus": this.state.isFocused,
+			"aui-core-display-off": !this.props.material
 		});
 
 		//classes
@@ -940,14 +972,16 @@ var Select = React.createClass({
 				React.createElement(
 					'label',
 					{ className: focusedLabel },
-					this.state.placeholder
+					this.state.initialPlaceholder
 				),
+				value,
 				input,
 				React.createElement('span', { className: 'Select-arrow-zone', onMouseDown: this.handleMouseDownOnArrow }),
 				React.createElement('span', { className: 'Select-arrow', onMouseDown: this.handleMouseDownOnArrow }),
 				loading,
 				clear
 			),
+			React.createElement('div', { className: animatedBar }),
 			menu
 		);
 	}
