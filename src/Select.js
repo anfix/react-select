@@ -871,7 +871,7 @@ var Select = React.createClass({
 			value = this.props.placeholder
 		}
 		
-		var animatedBar = ClassNames({
+		var animatedBar = classes({
             "aui-core-form-default-input-bar-animation":true,
             "focus": this.state.isFocused,
             "aui-core-display-off": !this.props.material
