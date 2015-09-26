@@ -857,7 +857,6 @@ var Select = React.createClass({
 
 				valued = true;
 
-				console.log("1");
 				value.push(valueComponent);
 			}, this);
 		}
@@ -867,7 +866,6 @@ var Select = React.createClass({
 			if (this.props.valueRenderer && !!this.state.values.length) {
 				valued = true;
 
-				console.log("2");
 				value.push(React.createElement(Value, {
 					key: 0,
 					option: val,
@@ -882,14 +880,10 @@ var Select = React.createClass({
 
 				value.push(singleValueComponent);
 			}
-
-			console.log(val);
 		}
 
 		var loading = this.state.isLoading ? React.createElement('span', { className: 'Select-loading', 'aria-hidden': 'true' }) : null;
 		var clear = this.props.clearable && this.state.value && !this.props.disabled ? React.createElement('span', { className: 'Select-clear', title: this.props.multi ? this.props.clearAllText : this.props.clearValueText, 'aria-label': this.props.multi ? this.props.clearAllText : this.props.clearValueText, onMouseDown: this.clearValue, onTouchEnd: this.clearValue, onClick: this.clearValue, dangerouslySetInnerHTML: { __html: '&times;' } }) : null;
-
-		console.log(valued);
 
 		var menu;
 		var menuProps;
