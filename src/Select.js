@@ -273,7 +273,7 @@ var Select = React.createClass({
 			if (typeof values === 'string') {
 				values = values === ''
 					? []
-					: this.props.multi 
+					: this.props.multi
 						? values.split(this.props.delimiter)
 						: [ values ];
 			} else {
@@ -768,7 +768,7 @@ var Select = React.createClass({
 			'has-value': this.state.value
 		});
 		var value = [];
-		
+
 		var valued = false;
 		if (this.props.multi) {
 			this.state.values.forEach(function(val) {
@@ -783,10 +783,9 @@ var Select = React.createClass({
 					onRemove: onRemove,
 					disabled: this.props.disabled
 				});
-				
+
 				valued = true;
-				
-				console.log("1");
+
 				value.push(valueComponent);
 			}, this);
 		}
@@ -795,8 +794,7 @@ var Select = React.createClass({
 			var val = this.state.values[0] || null;
 			if (this.props.valueRenderer && !!this.state.values.length) {
 				valued = true;
-				
-				console.log("2");
+
 				value.push(<Value
 						key={0}
 						option={val}
@@ -808,18 +806,16 @@ var Select = React.createClass({
 					value: val,
 					placeholder: this.state.placeholder
 				});
-				
+
 				value.push(singleValueComponent);
 			}
-			
-			console.log(val);
+
 		}
 
 		var loading = this.state.isLoading ? <span className="Select-loading" aria-hidden="true" /> : null;
 		var clear = this.props.clearable && this.state.value && !this.props.disabled ? <span className="Select-clear" title={this.props.multi ? this.props.clearAllText : this.props.clearValueText} aria-label={this.props.multi ? this.props.clearAllText : this.props.clearValueText} onMouseDown={this.clearValue} onTouchEnd={this.clearValue} onClick={this.clearValue} dangerouslySetInnerHTML={{ __html: '&times;' }} /> : null;
 
-		console.log(valued);
-		
+
 		var menu;
 		var menuProps;
 		if (this.state.isOpen) {
@@ -858,7 +854,7 @@ var Select = React.createClass({
 		} else if (!this.props.multi || !this.state.values.length) {
 			input = <div className="Select-input">&nbsp;</div>;
 		}
-		
+
 		var focusedLabel = classes({
 			'Select-label': true,
 			'focus': this.state.isFocused,
@@ -867,17 +863,17 @@ var Select = React.createClass({
 		});
 
 		value = val ? value : null;
-		
+
 		if (!val && !this.props.material){
 			value = this.props.placeholder
 		}
-		
+
 		var animatedBar = classes({
             "aui-core-form-default-input-bar-animation":true,
             "focus": this.state.isFocused,
             "aui-core-display-off": !this.props.material
         });
-		
+
 		//classes
 		return (
 			<div ref="wrapper" className={selectClass}>
